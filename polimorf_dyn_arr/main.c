@@ -46,35 +46,69 @@ char* read_string(size_t limit)
 
 int main()
 	{
-    Array* arr = createArr();
-    setInitWorkerArr(arr);
-    arr->init(arr,0);
+    Array* arrWorkers = createArr();
+    setInitWorkerArr(arrWorkers);
+    arrWorkers->init(arrWorkers,0);
 
     for (size_t i = 0; i < 3; i++)
         {
         Worker* worker = createWorker();
         char* inputStr;
 
-        string_input_error: 
+        string_input_error_workers:
         inputStr = read_string(STRING_SIZE_LIMIT);
 
         if (inputStr == NULL)
             {
-            goto string_input_error;
+            goto string_input_error_workers;
             }
         
         char** workerInfo = workerDataParser(inputStr);
         initWorker(worker,workerInfo);
 
-        setPushWorkerArr(arr);
-        pushWorkerArr(arr,worker);
+        setPushWorkerArr(arrWorkers);
+        pushWorkerArr(arrWorkers,worker);
 
         free(inputStr);
         }
 
-    setPrintWorkerArr(arr);
-    arr->print(arr);
-    freeArray(arr);
+    Array* arrStudents = createArr();
+    setInitStudentArr(arrStudents);
+    arrStudents->init(arrStudents, 0);
+
+    for (size_t i = 0; i < 2; i++)
+        {
+        Student* student = createStudent();
+        char* inputStr;
+
+        string_input_error_students:
+        inputStr = read_string(STRING_SIZE_LIMIT);
+
+        if (inputStr == NULL)
+            {
+            goto string_input_error_students;
+            }
+
+        char** studentInfo = studentDataParser(inputStr);
+        initStudent(student, studentInfo);
+
+        setPushStudentArr(arrStudents);
+        pushStudentArr(arrStudents, student);
+
+        free(inputStr);
+        }
+
+    setPrintWorkerArr(arrWorkers);
+    arrWorkers->print(arrWorkers);
+
+    setPrintStudentArr(arrStudents);
+    arrStudents->print(arrStudents);
+
+    setFreeWorkerArr(arrWorkers);
+    arrWorkers->freeArr(arrWorkers);
+
+    setFreeStudentArr(arrStudents);
+    arrStudents->freeArr(arrStudents);
 
     return 1;
 	}

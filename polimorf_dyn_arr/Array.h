@@ -4,31 +4,62 @@
 #include "stdio.h"
 #include "stdlib.h"
 #include "Worker.h"
+#include "Student.h"
 
 typedef struct Array
 	{
 	Worker** workerArr;
+	Student** studentArr;
 	size_t length;
 
-	void(*init)(struct Array* self,size_t workerArrLength);
+	void(*init)(struct Array* self,size_t length);
 	void(*push)(struct Array* self);
 	void(*print)(struct Array* self);
+	void(*freeArr)(struct Array* self);
 
 	} Array;
 
 Array* createArr();
 
+//init functions Worker
+
 void initWorkerArr(Array* self, size_t workerArrLength);
 void setInitWorkerArr(Array* self);
+
+//init functions Student
+
+void initStudentArr(Array* self, size_t studentArrLength);
+void setInitStudentArr(Array* self);
+
+//push functions Worker
 
 void pushWorkerArr(Array* self,Worker* to_push);
 void setPushWorkerArr(Array* self);
 
+//push functions Student
+
+void pushStudentArr(Array* self, Student* to_push);
+void setPushStudentArr(Array* self);
+
+//print functions Worker
+
 void printWorkerArr(Array* self);
 void setPrintWorkerArr(Array* self);
 
-void freeArray(Array* self);
+//print functions Student
 
+void printStudentArr(Array* self);
+void setPrintStudentArr(Array* self);
+
+//free functions Worker
+
+void freeWorkerArr(Array* self);
+void setFreeWorkerArr(Array* self);
+
+//free functions Student
+
+void freeStudentArr(Array* self);
+void setFreeStudentArr(Array* self);
 
 
 #endif
