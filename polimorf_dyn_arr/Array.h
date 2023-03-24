@@ -14,12 +14,18 @@ typedef struct Array
 
 	void(*init)(struct Array* self,size_t length);
 	void(*push)(struct Array* self);
+	void(*fill)(struct Array* self);
 	void(*print)(struct Array* self);
 	void(*freeArr)(struct Array* self);
 
 	} Array;
 
 Array* createArr();
+
+//set structure we work with
+
+void setWorkerMode(Array* self);
+void setStudentMode(Array* self);
 
 //init functions Worker
 
@@ -40,6 +46,16 @@ void setPushWorkerArr(Array* self);
 
 void pushStudentArr(Array* self, Student* to_push);
 void setPushStudentArr(Array* self);
+
+//fill functions Worker
+
+void fillWorkerArr(Array* self);
+void setFillWorkerArr(Array* self);
+
+//fill functions Student
+
+void fillStudentArr(Array* self);
+void setFillStudentArr(Array* self);
 
 //print functions Worker
 

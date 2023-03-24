@@ -142,10 +142,12 @@
     <ClCompile Include="Array.c" />
     <ClCompile Include="Array.h" />
     <ClCompile Include="main.c" />
+    <ClCompile Include="ServiceFunctions.c" />
     <ClCompile Include="Student.c" />
     <ClCompile Include="Worker.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ServiceFunctions.h" />
     <ClInclude Include="Student.h" />
     <ClInclude Include="Worker.h" />
   </ItemGroup>

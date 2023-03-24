@@ -1,10 +1,34 @@
 #include "stdio.h"
 #include "stdlib.h"
+#include "stddef.h"
+#include "ServiceFunctions.h"
 #include "Array.h"
+
+#define STRING_SIZE_LIMIT 100
 
 Array* createArr()
 	{
 	return (Array*)calloc(1, sizeof(Array));
+	}
+
+//set structure we work with
+
+void setWorkerMode(Array* self)
+	{
+	setInitWorkerArr(self);
+	setPushWorkerArr(self);
+	setFillWorkerArr(self);
+	setPrintWorkerArr(self);
+	setFreeWorkerArr(self);
+	}
+
+void setStudentMode(Array* self)
+	{
+	setInitStudentArr(self);
+	setPushStudentArr(self);
+	setFillStudentArr(self);
+	setPrintStudentArr(self);
+	setFreeStudentArr(self);
 	}
 
 //init functions Worker
@@ -76,11 +100,69 @@ void setPushStudentArr(Array* self)
 	}
 
 
+//fill functions Worker
+
+void fillWorkerArr(Array* self)
+	{
+	for (ptrdiff_t i = 0; i < self->length; i++)
+		{
+		Worker* worker = createWorker();
+		char* inputStr;
+
+		string_input_error:
+		inputStr = read_string(STRING_SIZE_LIMIT);
+
+		if (inputStr == NULL)
+			{
+			goto string_input_error;
+			}
+
+		char** workerInfo = workerDataParser(inputStr);
+		initWorker(worker, workerInfo);
+		self->workerArr[i] = worker;
+		free(inputStr);
+		}
+	}
+
+void setFillWorkerArr(Array* self)
+	{
+	self->fill = fillWorkerArr;
+	}
+
+//fill functions Student
+
+void fillStudentArr(Array* self)
+	{
+	for (ptrdiff_t i = 0; i < self->length; i++)
+		{
+		Student* student = createStudent();
+		char* inputStr;
+
+		string_input_error:
+		inputStr = read_string(STRING_SIZE_LIMIT);
+
+		if (inputStr == NULL)
+			{
+			goto string_input_error;
+			}
+
+		char** studentInfo = studentDataParser(inputStr);
+		initStudent(student, studentInfo);
+		self->studentArr[i] = student;
+		free(inputStr);
+		}
+	}
+
+void setFillStudentArr(Array* self)
+	{
+	self->fill = fillStudentArr;
+	}
+
 //print functions Worker
 
 void printWorkerArr(Array* self)
 	{
-	for (size_t i = 0; i < self->length; i++)
+	for (ptrdiff_t i = 0; i < self->length; i++)
 		{
 		printWorkerInfo(self->workerArr[i]);
 		}
@@ -95,7 +177,7 @@ void setPrintWorkerArr(Array* self)
 
 void printStudentArr(Array* self)
 	{
-	for (size_t i = 0; i < self->length; i++)
+	for (ptrdiff_t i = 0; i < self->length; i++)
 		{
 		printStudentInfo(self->studentArr[i]);
 		}
@@ -111,7 +193,7 @@ void setPrintStudentArr(Array* self)
 
 void freeWorkerArr(Array* self)
 	{
-	for (size_t i = 0; i < self->length; i++)
+	for (ptrdiff_t i = 0; i < self->length; i++)
 		{
 		freeWorker(self->workerArr[i]);
 		}
@@ -128,7 +210,7 @@ void setFreeWorkerArr(Array* self)
 
 void freeStudentArr(Array* self)
 	{
-	for (size_t i = 0; i < self->length; i++)
+	for (ptrdiff_t i = 0; i < self->length; i++)
 		{
 		freeStudent(self->studentArr[i]);
 		}

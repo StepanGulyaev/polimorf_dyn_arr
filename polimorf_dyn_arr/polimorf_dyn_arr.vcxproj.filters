@@ -30,12 +30,18 @@
     <ClCompile Include="Student.c">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="ServiceFunctions.c">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Worker.h">
       <Filter>Исходные файлы</Filter>
     </ClInclude>
     <ClInclude Include="Student.h">
+      <Filter>Исходные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="ServiceFunctions.h">
       <Filter>Исходные файлы</Filter>
     </ClInclude>
   </ItemGroup>
