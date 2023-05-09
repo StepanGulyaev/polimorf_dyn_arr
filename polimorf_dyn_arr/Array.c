@@ -4,8 +4,6 @@
 #include "ServiceFunctions.h"
 #include "Array.h"
 
-#define STRING_SIZE_LIMIT 100
-
 Array* createArr()
 	{
 	return (Array*)calloc(1, sizeof(Array));
@@ -36,7 +34,7 @@ void setStudentMode(Array* self)
 void initWorkerArr(Array* self,size_t workerArrLength)
 	{
 	self->length= workerArrLength;
-	self->workerArr = (Worker**)calloc(workerArrLength,sizeof(Worker));
+	self->arr.workerArr = (Worker**)calloc(workerArrLength,sizeof(Worker));
 	}
 
 void setInitWorkerArr(Array* self)
@@ -50,7 +48,7 @@ void setInitWorkerArr(Array* self)
 void initStudentArr(Array* self, size_t studentArrLength)
 	{
 	self->length = studentArrLength;
-	self->studentArr = (Worker**)calloc(studentArrLength, sizeof(Worker));
+	self->arr.studentArr = (Student**)calloc(studentArrLength, sizeof(Student));
 	}
 
 void setInitStudentArr(Array* self)
@@ -64,14 +62,14 @@ void setInitStudentArr(Array* self)
 void pushWorkerArr(Array* self, Worker* to_push)
 	{
 	self->length++;
-	Worker** test_for_null = (Worker**)realloc(self->workerArr, self->length * sizeof(Worker*));
+	Worker** test_for_null = (Worker**)realloc(self->arr.workerArr, self->length * sizeof(Worker*));
 	if(test_for_null == NULL)
 		{
 		printf("Can't add element. Not enough RAM\n");
 		return;
 		}
-	self->workerArr = test_for_null;
-	self->workerArr[self->length - 1] = to_push;
+	self->arr.workerArr = test_for_null;
+	self->arr.workerArr[self->length - 1] = to_push;
 	}
 
 void setPushWorkerArr(Array* self)
@@ -84,14 +82,14 @@ void setPushWorkerArr(Array* self)
 void pushStudentArr(Array* self, Student* to_push)
 	{
 	self->length++;
-	Student** test_for_null = (Student**)realloc(self->studentArr, self->length * sizeof(Worker*));
+	Student** test_for_null = (Student**)realloc(self->arr.studentArr, self->length * sizeof(Worker*));
 	if (test_for_null == NULL)
 		{
 		printf("Can't add element. Not enough RAM\n");
 		return;
 		}
-	self->studentArr = test_for_null;
-	self->studentArr[self->length - 1] = to_push;
+	self->arr.studentArr = test_for_null;
+	self->arr.studentArr[self->length - 1] = to_push;
 	}
 
 void setPushStudentArr(Array* self)
@@ -110,7 +108,7 @@ void fillWorkerArr(Array* self)
 		char* inputStr;
 
 		string_input_error:
-		inputStr = read_string(STRING_SIZE_LIMIT);
+		inputStr = read_string(100);
 
 		if (inputStr == NULL)
 			{
@@ -119,7 +117,7 @@ void fillWorkerArr(Array* self)
 
 		char** workerInfo = workerDataParser(inputStr);
 		initWorker(worker, workerInfo);
-		self->workerArr[i] = worker;
+		self->arr.workerArr[i] = worker;
 		free(inputStr);
 		}
 	}
@@ -139,7 +137,7 @@ void fillStudentArr(Array* self)
 		char* inputStr;
 
 		string_input_error:
-		inputStr = read_string(STRING_SIZE_LIMIT);
+		inputStr = read_string(100);
 
 		if (inputStr == NULL)
 			{
@@ -148,7 +146,7 @@ void fillStudentArr(Array* self)
 
 		char** studentInfo = studentDataParser(inputStr);
 		initStudent(student, studentInfo);
-		self->studentArr[i] = student;
+		self->arr.studentArr[i] = student;
 		free(inputStr);
 		}
 	}
@@ -164,7 +162,7 @@ void printWorkerArr(Array* self)
 	{
 	for (ptrdiff_t i = 0; i < self->length; i++)
 		{
-		printWorkerInfo(self->workerArr[i]);
+		printWorkerInfo(self->arr.workerArr[i]);
 		}
 	}
 
@@ -179,7 +177,7 @@ void printStudentArr(Array* self)
 	{
 	for (ptrdiff_t i = 0; i < self->length; i++)
 		{
-		printStudentInfo(self->studentArr[i]);
+		printStudentInfo(self->arr.studentArr[i]);
 		}
 	}
 
@@ -195,9 +193,9 @@ void freeWorkerArr(Array* self)
 	{
 	for (ptrdiff_t i = 0; i < self->length; i++)
 		{
-		freeWorker(self->workerArr[i]);
+		freeWorker(self->arr.workerArr[i]);
 		}
-	free(self->workerArr);
+	free(self->arr.workerArr);
 	free(self);
 	}
 
@@ -212,9 +210,9 @@ void freeStudentArr(Array* self)
 	{
 	for (ptrdiff_t i = 0; i < self->length; i++)
 		{
-		freeStudent(self->studentArr[i]);
+		freeStudent(self->arr.studentArr[i]);
 		}
-	free(self->studentArr);
+	free(self->arr.studentArr);
 	free(self);
 	}
 

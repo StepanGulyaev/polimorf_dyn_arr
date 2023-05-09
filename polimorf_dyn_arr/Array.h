@@ -6,10 +6,16 @@
 #include "Worker.h"
 #include "Student.h"
 
-typedef struct Array
+
+typedef union Elements
 	{
 	Worker** workerArr;
 	Student** studentArr;
+	} Elements;
+
+typedef struct Array
+	{
+	Elements arr;
 	size_t length;
 
 	void(*init)(struct Array* self,size_t length);
