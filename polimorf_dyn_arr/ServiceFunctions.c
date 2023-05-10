@@ -4,12 +4,15 @@
 #include "stddef.h"
 #include "ServiceFunctions.h"
 
-#define STRING_SIZE_LIMIT 100
-
 char* read_string(size_t limit)
     {
-    char* string = (char*)calloc(1, sizeof(char));
     size_t length = 1;
+    char* string = (char*)calloc(length, sizeof(char));
+    if (string == NULL)
+        {
+        printf("Not enough memory to create string.Returning...\n");
+        return NULL;
+        }
     string[0] = '\0';
     while (1)
         {
